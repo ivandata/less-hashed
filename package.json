@@ -1,0 +1,37 @@
+{
+  "name": "less-hashed",
+  "version": "0.0.0",
+  "description": "A utility to hashed less files, make tree of all less files and his dependencies with logs and return only changed files",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ivandata/less-hashed.git"
+  },
+  "keywords": [
+    "hash",
+    "less",
+    "dependencies",
+    "@import",
+    "tree"
+  ],
+  "author": "Ivan Malov <nuclearfunk@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivandata/less-hashed/issues"
+  },
+  "homepage": "https://github.com/ivandata/less-hashed#readme",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "colors": "^1.1.2",
+    "fake-fs": "^0.5.0",
+    "fs": "0.0.1-security",
+    "glob": "^7.1.1",
+    "hash-files": "^1.1.1",
+    "mkdirp": "^0.5.1",
+    "mocha": "^3.2.0",
+    "path": "^0.12.7"
+  }
+}
