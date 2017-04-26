@@ -34,11 +34,14 @@ gulp.task('less', (success) => {
 	);
 
     return gulp
-		.src(includes, { base: './assets/less/' })
-		.pipe(filter(paths.include, paths.exclude]))
-		.pipe(gulp.dest(paths.destination))
-		.on('end', () => {
-			console.log('Build LESS!');
-		}, success);
+	.src(includes, { base: './assets/less/' })
+	.pipe(filter(paths.include, paths.exclude]))
+	.pipe(less({
+        relativeUrls: true
+    })
+	.pipe(gulp.dest(paths.destination))
+	.on('end', () => {
+		console.log('Build LESS!');
+	}, success);
 }
 ```
