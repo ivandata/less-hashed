@@ -4,9 +4,7 @@ import { expect } from 'chai';
 import fs from 'fs';
 import { rgx } from '../lib/helpers';
 
-function getFileContent (file) {
-    return fs.readFileSync(file, 'utf8');
-}
+let getFileContent = (file) => { return fs.readFileSync(file, 'utf8'); };
 
 describe("Get paths from @imports directive", function() {
 
