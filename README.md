@@ -36,9 +36,9 @@ gulp.task('less', function (success) {
 
   return gulp
     .src(includes, { base: './assets/less/' })
-	.pipe(filter([ paths.include, paths.exclude ]))
-	.pipe(less({ relativeUrls: true })
-	.pipe(gulp.dest(paths.destination))
-	.on('end', success);
+    .pipe(filter([ paths.include, paths.exclude ]))
+    .pipe(less({ relativeUrls: true })
+    .pipe(gulp.dest(paths.destination))
+    .on('end', success);
 }
 ```
