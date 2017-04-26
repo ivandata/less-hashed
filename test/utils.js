@@ -33,3 +33,52 @@ describe("Compare two hashes", function() {
     });
 
 });
+
+describe("Inverts the file tree with @imports in them", function() {
+
+    let file_tree = {
+        "./assets/file.less": [
+            "./assets/dependency_1.less"
+        ],
+        "./assets/other_file.less": [
+            "./assets/dependency_1.less",
+            "./assets/dependency_2.less",
+            "./assets/dependency_3.less",
+            "./assets/dependency_4.less",
+            "./assets/dependency_5.less",
+            "./assets/dependency_6.less",
+            "./assets/dependency_7.less"
+        ]
+    };
+
+    it("Return Object with files imported in tree", function (done) {
+        expect(imports(file_tree)).to.eql({
+            "./assets/dependency_1.less": {
+                "./assets/file.less": 1,
+                "./assets/other_file.less": 1
+            },
+            "./assets/dependency_2.less": {
+                "./assets/other_file.less": 1
+            },
+            "./assets/dependency_3.less": {
+                "./assets/other_file.less": 1
+            },
+            "./assets/dependency_4.less": {
+                "./assets/other_file.less": 1
+            },
+            "./assets/dependency_5.less": {
+                "./assets/other_file.less": 1
+            },
+            "./assets/dependency_6.less": {
+                "./assets/other_file.less": 1
+            },
+            "./assets/dependency_7.less": {
+                "./assets/other_file.less": 1
+            },
+            "./assets/file.less": {},
+            "./assets/other_file.less": {}
+        });
+        done();
+    });
+
+});
