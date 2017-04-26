@@ -19,6 +19,18 @@ export default function (less_files_path, hash_file_path, options = {}) {
         debug: "DEBUG mode"
     };
 
+    let sendEnableModeMessage = (mode) => {
+        return console.log(
+            colors.black.bgYellow(`${mode} enabled`)
+        );
+    };
+
+    let sendDisabledModeMessage = (mode) => {
+        return console.log(
+            colors.black.bgYellow(`${mode} disabled`)
+        );
+    };
+
     let less_files = glob.sync(less_files_path);
 
     let less_files_new_hashes = {};
@@ -88,14 +100,6 @@ export default function (less_files_path, hash_file_path, options = {}) {
         } else {
             sendDisabledModeMessage(MODES.hash);
         }
-    }
-
-    function sendEnableModeMessage(mode) {
-        return console.log(colors.black.bgYellow(`${mode} enabled`));
-    }
-
-    function sendDisabledModeMessage(mode) {
-        return console.log(colors.black.bgYellow(`${mode} disabled`));
     }
 
     if (FORCE_COMPILE_ALL) {
