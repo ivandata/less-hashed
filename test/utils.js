@@ -1,12 +1,7 @@
 'use strict';
 
-const expect = require('chai').expect;
-const utils = require('../lib/utils');
-const compare = utils.compare;
-const paths = utils.paths;
-const imports = utils.imports;
-const files = utils.files;
-const colors = require('colors/safe');
+import { expect } from 'chai';
+import { compare, paths, imports, files } from '../lib/utils';
 
 describe("Compare two hashes", function () {
 

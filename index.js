@@ -1,15 +1,14 @@
 'use strict';
 
-const hash = require('hash-files');
-const glob = require("glob");
-const fs = require('fs');
-const colors = require('colors/safe');
-const mkdirp = require('mkdirp');
-const u = require("./lib/utils");
+import hashFiles from 'hash-files';
+import glob from "glob";
+import fs from 'fs';
+import colors from 'colors/safe';
+import mkdirp from 'mkdirp';
+import { compare, paths, imports, files } from './lib/utils';
 
-module.exports = function (less_files_path, hash_file_path, options) {
+export default function (less_files_path, hash_file_path, options = {}) {
 
-    options || (options = {});
     const FORCE_COMPILE_ALL =  options.force_compile_all !== undefined ?  options.force_compile_all: false;
     const DEBUG_MODE = options.debug_mode !== undefined ? options.debug_mode: false;
     const SAVE_SOURCES_HASHES_FILE = options.save_sources_hashes_file !== undefined ? options.save_sources_hashes_file: true;
@@ -25,12 +24,12 @@ module.exports = function (less_files_path, hash_file_path, options) {
     let less_files_new_hashes = {};
     let less_files_dependencies_tree = {};
     for (let file of less_files) {
-        less_files_new_hashes[file] = hash.sync({ files: file });
-        less_files_dependencies_tree[file] = u.paths(file);
+        less_files_new_hashes[file] = hashFiles.sync({ files: file });
+        less_files_dependencies_tree[file] = paths(file);
     }
 
     if (FORCE_COMPILE_ALL && !DEBUG_MODE) {
-        console.log(colors.black.bgYellow(MODES.force + ' enabled'));
+        sendEnableModeMessage(MODES.force);
         writeHashAndDebugFiles();
         return less_files;
     }
@@ -38,13 +37,13 @@ module.exports = function (less_files_path, hash_file_path, options) {
     let changed_less_files;
     if (fs.existsSync(hash_file_path)) {
         let less_files_old_hashes = JSON.parse(fs.readFileSync(hash_file_path, 'utf8'));
-        changed_less_files = u.compare(less_files_old_hashes, less_files_new_hashes);
+        changed_less_files = compare(less_files_old_hashes, less_files_new_hashes);
     } else {
         changed_less_files = less_files_new_hashes;
     }
 
-    let less_files_imported_in_tree = u.imports(less_files_dependencies_tree);
-    let less_files_to_compile = u.files(changed_less_files, less_files_imported_in_tree);
+    let less_files_imported_in_tree = imports(less_files_dependencies_tree);
+    let less_files_to_compile = files(changed_less_files, less_files_imported_in_tree);
 
     let result = [];
     for (let file_to_compile in less_files_to_compile) {
@@ -81,18 +80,26 @@ module.exports = function (less_files_path, hash_file_path, options) {
             fs.writeFileSync(hash_file_dir + '_result.json',
                 JSON.stringify(result, "", 4));
 
-            console.log(colors.black.bgYellow(MODES.debug + ' enabled'));
+            sendEnableModeMessage(MODES.debug);
         }
         if (SAVE_SOURCES_HASHES_FILE) {
             fs.writeFileSync(hash_file_path,
                 JSON.stringify(less_files_new_hashes, "", 4));
         } else {
-            console.log(colors.black.bgYellow(MODES.hash + ' disabled'));
+            sendDisabledModeMessage(MODES.hash);
         }
     }
 
+    function sendEnableModeMessage(mode) {
+        return console.log(colors.black.bgYellow(`${mode} enabled`));
+    }
+
+    function sendDisabledModeMessage(mode) {
+        return console.log(colors.black.bgYellow(`${mode} disabled`));
+    }
+
     if (FORCE_COMPILE_ALL) {
-        console.log(colors.black.bgYellow(MODES.force + ' enabled'));
+        sendEnableModeMessage(MODES.force);
         return less_files;
     } else {
         return result;

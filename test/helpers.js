@@ -1,20 +1,8 @@
 'use strict';
 
-const should = require('chai').should;
-const assert = require('chai').assert;
-const expect = require('chai').expect;
-const fs = require('fs');
-const helpers = require('../lib/helpers');
-const rgx = helpers.rgx;
-
-const fakeFs = require('fake-fs');
-var _fs = new fakeFs;
-_fs.file('file', {
-    content: 'asdf',
-    mtime: new Date,
-    hello: 'hello'
-});
-
+import { expect } from 'chai';
+import fs from 'fs';
+import { rgx } from '../lib/helpers';
 
 function getFileContent (file) {
     return fs.readFileSync(file, 'utf8');
