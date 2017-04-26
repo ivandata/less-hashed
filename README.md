@@ -21,17 +21,17 @@ let paths = {
 
 gulp.task('less', (success) => {
 
-    let includes, force_compile_all, debug_mode;
-	if (process.argv.indexOf('--force') > -1) { force_compile_all = true; }
-	if (process.argv.indexOf('--debug') > -1) { debug_mode = true; }
-	includes = lesshashed(
-		paths.src,
-        paths.destination + '/hashes.json',
-        {
-            force_compile_all:  force_compile_all,
-            debug_mode: debug_mode
-        }
-	);
+let includes, force_compile_all, debug_mode;
+if (process.argv.indexOf('--force') > -1) { force_compile_all = true; }
+if (process.argv.indexOf('--debug') > -1) { debug_mode = true; }
+includes = lesshashed(
+    paths.src,
+    paths.destination + '/hashes.json',
+    {
+        force_compile_all:  force_compile_all,
+        debug_mode: debug_mode
+    }
+);
 
     return gulp
 		.src(includes, { base: './assets/less/' })
