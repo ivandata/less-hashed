@@ -7,12 +7,18 @@ const colors = require('colors/safe');
 const mkdirp = require('mkdirp');
 const u = require("./lib/utils");
 
-module.exports = function (less_files_path, hash_file_path, opt) {
+module.exports = function (less_files_path, hash_file_path, options) {
 
-    const options = opt || {};
+    options || (options = {});
     const FORCE_COMPILE_ALL =  options.force_compile_all !== undefined ?  options.force_compile_all: false;
     const DEBUG_MODE = options.debug_mode !== undefined ? options.debug_mode: false;
     const SAVE_SOURCES_HASHES_FILE = options.save_sources_hashes_file !== undefined ? options.save_sources_hashes_file: true;
+
+    const MODES = {
+        hash: "SAVE HASHES mode",
+        force: "FORCE COMPILE mode",
+        debug: "DEBUG mode"
+    };
 
     let less_files = glob.sync(less_files_path);
 
@@ -24,7 +30,7 @@ module.exports = function (less_files_path, hash_file_path, opt) {
     }
 
     if (FORCE_COMPILE_ALL && !DEBUG_MODE) {
-        console.log(colors.black.bgYellow('FORCE_COMPILE_ALL mode'));
+        console.log(colors.black.bgYellow(MODES.force + ' enabled'));
         writeHashAndDebugFiles();
         return less_files;
     }
@@ -60,7 +66,7 @@ module.exports = function (less_files_path, hash_file_path, opt) {
     }
 
     /**
-     * Saves to disk the file hash and logs: dependencies, changed files and compile in debug mode
+     * Saves to disk the file hashes and logs: dependencies, changed files, compile and result in debug mode
      */
     function writeHashAndDebugFiles() {
         if (DEBUG_MODE) {
@@ -75,18 +81,18 @@ module.exports = function (less_files_path, hash_file_path, opt) {
             fs.writeFileSync(hash_file_dir + '_result.json',
                 JSON.stringify(result, "", 4));
 
-            console.log(colors.black.bgYellow('DEBUG mode enabled'));
+            console.log(colors.black.bgYellow(MODES.debug + ' enabled'));
         }
         if (SAVE_SOURCES_HASHES_FILE) {
             fs.writeFileSync(hash_file_path,
                 JSON.stringify(less_files_new_hashes, "", 4));
         } else {
-            console.log(colors.black.bgYellow('SAVE_SOURCES_HASHES_FILE mode disabled'));
+            console.log(colors.black.bgYellow(MODES.hash + ' disabled'));
         }
     }
 
     if (FORCE_COMPILE_ALL) {
-        console.log(colors.black.bgYellow('FORCE_COMPILE_ALL mode'));
+        console.log(colors.black.bgYellow(MODES.force + ' enabled'));
         return less_files;
     } else {
         return result;
