@@ -5,7 +5,7 @@ import glob from "glob";
 import fs from 'fs';
 import colors from 'colors/safe';
 import mkdirp from 'mkdirp';
-import { compare, paths, imports, files } from './lib/utils';
+import { compare, rgx, paths, imports, files } from './lib/utils';
 
 export default function (less_files_path, hash_file_path, options = {}) {
 
@@ -35,9 +35,11 @@ export default function (less_files_path, hash_file_path, options = {}) {
 
     let less_files_new_hashes = {};
     let less_files_dependencies_tree = {};
+    let less_file_import_path;
     for (let file of less_files) {
         less_files_new_hashes[file] = hashFiles.sync({ files: file });
-        less_files_dependencies_tree[file] = paths(file);
+        less_file_import_path = rgx(file);
+        less_files_dependencies_tree[file] = paths(file, less_file_import_path);
     }
 
     if (FORCE_COMPILE_ALL && !DEBUG_MODE) {
@@ -50,13 +52,13 @@ export default function (less_files_path, hash_file_path, options = {}) {
     if (SAVE_SOURCES_HASHES_FILE) {
         if (fs.existsSync(hash_file_path)) {
             let less_files_old_hashes = JSON.parse(fs.readFileSync(hash_file_path, 'utf8'));
-            changed_less_files = compare(less_files_old_hashes, less_files_new_hashes);
+            changed_less_files = getImportContent(less_files_old_hashes, less_files_new_hashes);
         }
     } else {
         changed_less_files = less_files_new_hashes;
     }
-    
-    let less_files_imported_in_tree = imports(less_files_dependencies_tree);
+
+    let less_files_imported_in_tree = imports(less_files_dependencies_tree, );
     let less_files_to_compile = files(changed_less_files, less_files_imported_in_tree);
 
     let result = [];
