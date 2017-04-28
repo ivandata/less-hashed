@@ -83,6 +83,33 @@ describe("Get paths from @imports directive", function() {
     });
 });
 
+describe("Corrects a relative file path in absolute", function () {
+    let relative_path = './files/level/one/file.less';
+    let absolute_paths = [
+        'file.less',
+        '../file.less',
+        '../../file.less',
+        '../../../file.less'
+    ];
+
+    it("Return absolute files paths from array of relative paths", function (done) {
+        expect(correctRelativePaths(relative_path, absolute_paths))
+            .to.eql([
+            './files/level/one/file.less',
+            './files/level/file.less',
+            './files/file.less',
+            './file.less'
+        ]);
+        done();
+    });
+
+    it("Return Array", function (done) {
+        assert.isArray(correctRelativePaths(relative_path, absolute_paths), 'getFileImportsFullPaths function must return Array');
+        done();
+    });
+
+});
+
 describe("Inverts the file tree with @imports in them", function () {
 
     let file_tree = {
