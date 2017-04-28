@@ -1,7 +1,13 @@
 'use strict';
 
 import { expect, assert } from 'chai';
-import { compare, rgx, paths, imports, files, } from '../lib/utils';
+import {
+    compareHash,
+    getImportsPaths,
+    correctRelativePaths,
+    invertFilesTree,
+    getFilesToCompile
+} from '../lib/utils';
 
 describe("Compare two hashes", function () {
 
@@ -18,7 +24,7 @@ describe("Compare two hashes", function () {
     };
 
     it("Return difference", function (done) {
-        expect(compare(old_hash, new_hash)).to.deep.equal({
+        expect(compareHash(old_hash, new_hash)).to.deep.equal({
             "less/pages/page.less": "b7f631511b5962f42922ff5de02b26a992ac746c",
             "less/base.less": "63a14e41ab171c6530d0e43131fb71324e077807",
         });
@@ -26,7 +32,7 @@ describe("Compare two hashes", function () {
     });
 
     it("Return Object", function (done) {
-        assert.isObject(compare(old_hash, new_hash), 'CompareHash function must return Object');
+        assert.isObject(compareHash(old_hash, new_hash), 'CompareHash function must return Object');
         done();
     });
 
@@ -36,31 +42,31 @@ describe("Get paths from @imports directive", function() {
 
     let css_extension = './test/imports-cases/extensions/css-imports/file.less';
     it("Return full paths from .css extension", function (done) {
-        expect(rgx(css_extension)).to.eql(['imports/import-file.css']);
+        expect(getImportsPaths(css_extension)).to.eql(['imports/import-file.css']);
         done();
     });
 
     let empty_extension = './test/imports-cases/extensions/empty-imports/file.less';
     it("Return full paths from NO extension", function (done) {
-        expect(rgx(empty_extension)).to.eql(['imports/import-file.less']);
+        expect(getImportsPaths(empty_extension)).to.eql(['imports/import-file.less']);
         done();
     });
 
     let less_extension = './test/imports-cases/extensions/less-imports/file.less';
     it("Return full paths from .less extension", function (done) {
-        expect(rgx(less_extension)).to.eql(['imports/import-file.less']);
+        expect(getImportsPaths(less_extension)).to.eql(['imports/import-file.less']);
         done();
     });
 
     let php_extension = './test/imports-cases/extensions/php-imports/file.less';
     it("Return full paths from .php extension", function (done) {
-        expect(rgx(php_extension)).to.eql(['imports/import-file.php']);
+        expect(getImportsPaths(php_extension)).to.eql(['imports/import-file.php']);
         done();
     });
 
     let set_extensions = './test/imports-cases/extensions/set-imports/file.less';
     it("Return full paths from set of extensions", function (done) {
-        expect(rgx(set_extensions))
+        expect(getImportsPaths(set_extensions))
             .to.eql([
             'imports/first-import-file.css',
             'imports/second-import-file.less',
@@ -72,7 +78,7 @@ describe("Get paths from @imports directive", function() {
     });
 
     it("Return Array", function (done) {
-        assert.isArray(rgx(set_extensions), 'parseImportedFilesFromFileContent function must return Array');
+        assert.isArray(getImportsPaths(set_extensions), 'parseImportedFilesFromFileContent function must return Array');
         done();
     });
 });
@@ -95,7 +101,7 @@ describe("Inverts the file tree with @imports in them", function () {
     };
 
     it("Return Object with files imported in tree", function (done) {
-        expect(imports(file_tree)).to.deep.equal({
+        expect(invertFilesTree(file_tree)).to.deep.equal({
             "./assets/dependency_1.less": {
                 "./assets/file.less": 1,
                 "./assets/other_file.less": 1
@@ -161,7 +167,7 @@ describe("Builds a tree of compiled files of the dependencies", function () {
     };
 
     it("Return Object with files to compile", function (done) {
-        expect(files(changed_files, file_imported_in_tree)).to.deep.equal({
+        expect(getFilesToCompile(changed_files, file_imported_in_tree)).to.deep.equal({
             "./assets/dependency_1.less": 1,
             "./assets/file.less": 1,
             "./assets/other_file.less": 1

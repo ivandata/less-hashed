@@ -13,16 +13,16 @@ describe("Index", function () {
 
     it("Return result of Index", function (done) {
         expect(lessHashed(less_files_path, hash_file_path, options))
-            .have.members([
+            .to.eql([
                 './test/imports-cases/extensions/css-imports/file.less',
-                './test/imports-cases/extensions/empty-imports/imports/import-file.less',
                 './test/imports-cases/extensions/empty-imports/file.less',
-                './test/imports-cases/extensions/less-imports/imports/import-file.less',
+                './test/imports-cases/extensions/empty-imports/imports/import-file.less',
                 './test/imports-cases/extensions/less-imports/file.less',
+                './test/imports-cases/extensions/less-imports/imports/import-file.less',
                 './test/imports-cases/extensions/php-imports/file.less',
+                './test/imports-cases/extensions/set-imports/file.less',
                 './test/imports-cases/extensions/set-imports/imports/second-import-file.less',
-                './test/imports-cases/extensions/set-imports/imports/third-import-file.less',
-                './test/imports-cases/extensions/set-imports/file.less'
+                './test/imports-cases/extensions/set-imports/imports/third-import-file.less'
             ])
             .lengthOf(9);
         done();
