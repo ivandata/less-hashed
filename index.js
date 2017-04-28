@@ -47,13 +47,15 @@ export default function (less_files_path, hash_file_path, options = {}) {
     }
 
     let changed_less_files;
-    if (fs.existsSync(hash_file_path)) {
-        let less_files_old_hashes = JSON.parse(fs.readFileSync(hash_file_path, 'utf8'));
-        changed_less_files = compare(less_files_old_hashes, less_files_new_hashes);
+    if (SAVE_SOURCES_HASHES_FILE) {
+        if (fs.existsSync(hash_file_path)) {
+            let less_files_old_hashes = JSON.parse(fs.readFileSync(hash_file_path, 'utf8'));
+            changed_less_files = compare(less_files_old_hashes, less_files_new_hashes);
+        }
     } else {
         changed_less_files = less_files_new_hashes;
     }
-
+    
     let less_files_imported_in_tree = imports(less_files_dependencies_tree);
     let less_files_to_compile = files(changed_less_files, less_files_imported_in_tree);
 
@@ -63,17 +65,19 @@ export default function (less_files_path, hash_file_path, options = {}) {
         result.push(file_to_compile);
     }
 
-    let hash_file_dir = hash_file_path.substring(0, hash_file_path.lastIndexOf("/")) + '/';
-    if (fs.existsSync(hash_file_dir)) {
-        writeHashAndDebugFiles();
-    } else {
-        mkdirp(hash_file_dir, (err) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
+    if (SAVE_SOURCES_HASHES_FILE) {
+        let hash_file_dir = hash_file_path.substring(0, hash_file_path.lastIndexOf("/")) + '/';
+        if (fs.existsSync(hash_file_dir)) {
             writeHashAndDebugFiles();
-        });
+        } else {
+            mkdirp(hash_file_dir, (err) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                writeHashAndDebugFiles();
+            });
+        }
     }
 
     /**
