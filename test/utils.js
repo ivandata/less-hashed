@@ -1,6 +1,6 @@
 'use strict';
 
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import { compare, paths, imports, files } from '../lib/utils';
 
 describe("Compare two hashes", function () {
@@ -17,11 +17,16 @@ describe("Compare two hashes", function () {
         "less/pages/page.less": "b7f631511b5962f42922ff5de02b26a992ac746c"
     };
 
-    it("Return Object with difference", function (done) {
-        expect(compare(old_hash, new_hash)).to.eql({
+    it("Return difference", function (done) {
+        expect(compare(old_hash, new_hash)).to.deep.equal({
+            "less/pages/page.less": "b7f631511b5962f42922ff5de02b26a992ac746c",
             "less/base.less": "63a14e41ab171c6530d0e43131fb71324e077807",
-            "less/pages/page.less": "b7f631511b5962f42922ff5de02b26a992ac746c"
         });
+        done();
+    });
+
+    it("Return Object", function (done) {
+        assert.isObject(compare(old_hash, new_hash), 'CompareHash function must return Object');
         done();
     });
 
@@ -45,7 +50,7 @@ describe("Inverts the file tree with @imports in them", function () {
     };
 
     it("Return Object with files imported in tree", function (done) {
-        expect(imports(file_tree)).to.eql({
+        expect(imports(file_tree)).to.deep.equal({
             "./assets/dependency_1.less": {
                 "./assets/file.less": 1,
                 "./assets/other_file.less": 1
@@ -111,7 +116,7 @@ describe("Builds a tree of compiled files of the dependencies", function () {
     };
 
     it("Return Object with files to compile", function (done) {
-        expect(files(changed_files, file_imported_in_tree)).to.eql({
+        expect(files(changed_files, file_imported_in_tree)).to.deep.equal({
             "./assets/dependency_1.less": 1,
             "./assets/file.less": 1,
             "./assets/other_file.less": 1
