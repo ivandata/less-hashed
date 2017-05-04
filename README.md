@@ -13,8 +13,7 @@ Can be useful:
 npm install less-hashed --save-dev
 ```
 
-## Examples
-### With Gulp
+## Gulp example
 In this case i use [gulp-filter](https://github.com/sindresorhus/gulp-filter) for filter exclude files.
 ```javascript
 'use strict';
@@ -53,8 +52,6 @@ gulp.task('default', function () {
     .pipe(gulp.dest(paths.destination));
 });
 ```
-### With express.js
-Coming soon...
 ## API
 ### lessChanged(less_files_path, hash_file_path, [options]);
 
