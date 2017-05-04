@@ -74,7 +74,7 @@ Path to save hash and debug files.
 Type: `Object`
 
 #### force_compile_all
-Type: `boolean`    
+Type: `boolean`     
 Default: `false`
 
 Make new hash file and return full tree of less files and their dependencies.
