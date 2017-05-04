@@ -14,7 +14,7 @@ npm install less-hashed --save-dev
 ```
 
 ## Gulp example
-In this case i use [gulp-filter](https://github.com/sindresorhus/gulp-filter) for filter exclude files.
+Used [gulp-filter](https://github.com/sindresorhus/gulp-filter) for filter exclude files.
 ```javascript
 'use strict';
 
