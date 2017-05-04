@@ -74,19 +74,19 @@ Path to save hash and debug files.
 Type: `Object`
 
 #### force_compile_all
-Type: `boolean`\s\s
+Type: `boolean`
 Default: `false`
 
 Make new hash file and return full tree of less files and their dependencies.
 
 #### debug_mode
-Type: `boolean`\s\s
+Type: `boolean`
 Default: `false`
 
 Save to disk the files hashes and logs: dependencies, changed files, compile and result.
 
 #### save_sources_hashes_file
-Type: `boolean`\s\s
+Type: `boolean`  
 Default: `true`
 
 Save hash file or not.
