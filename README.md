@@ -59,25 +59,36 @@ gulp.task('default', function () {
 Coming soon...
 ## API
 ### lessChanged(less_files_path, hash_file_path, [options]);
+
 #### less_files_path
 Type: `String`
+
 Path to less files. Use *glob* patterns. For example `'./**/*.less'`. See [node-glob](https://github.com/isaacs/node-glob) for more info and examples.
+
 #### hash_file_path
 Type: `String`
+
 Path to save hash and debug files.
+
 ### options
 Type: `Object`
+
 #### force_compile_all
 Type: `boolean`
 Default: `false`
+
 Make new hash file and return full tree of less files and their dependencies.
+
 #### debug_mode
 Type: `boolean`
 Default: `false`
+
 Save to disk the files hashes and logs: dependencies, changed files, compile and result.
+
 #### save_sources_hashes_file
 Type: `boolean`
 Default: `true`
+
 Save hash file or not.
 
 ## License
