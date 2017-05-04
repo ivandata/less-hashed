@@ -73,8 +73,8 @@ export default function (less_files_path, hash_file_path, options = {}) {
         result.push(file_to_compile);
     }
 
+    let hash_file_dir = hash_file_path.substring(0, hash_file_path.lastIndexOf("/")) + '/';
     if (SAVE_SOURCES_HASHES_FILE) {
-        let hash_file_dir = hash_file_path.substring(0, hash_file_path.lastIndexOf("/")) + '/';
         if (fs.existsSync(hash_file_dir)) {
             writeHashAndDebugFiles();
         } else {

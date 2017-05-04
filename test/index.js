@@ -11,7 +11,7 @@ describe("Index", function () {
         save_sources_hashes_file: false
     };
 
-    it("Return result of Index", function (done) {
+    it("Return files to compile", function (done) {
         expect(lessHashed(less_files_path, hash_file_path, options))
             .to.eql([
                 './test/imports-cases/extensions/css-imports/file.less',

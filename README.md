@@ -12,7 +12,7 @@ const
   gulp = require('gulp'),
   less = require('gulp-less'),
   filter = require('gulp-filter'),
-  lesshashed = require('less-hashed');
+  lessHashed = require('less-hashed');
 
 let paths = {
   src: './assets/less/**/*.less',
@@ -21,12 +21,12 @@ let paths = {
   destination: './build/css/'
 };
 
-gulp.task('less', function (success) {
+gulp.task('default', function () {
 
   let includes, force_compile_all, debug_mode;
   if (process.argv.indexOf('--force') > -1) { force_compile_all = true; }
   if (process.argv.indexOf('--debug') > -1) { debug_mode = true; }
-  includes = lesshashed(
+  includes = lessHashed(
     paths.src,
     paths.destination + '/hashes.json',
     {
@@ -39,7 +39,6 @@ gulp.task('less', function (success) {
     .src(includes, { base: './assets/less/' })
     .pipe(filter([ paths.include, paths.exclude ]))
     .pipe(less({ relativeUrls: true })
-    .pipe(gulp.dest(paths.destination))
-    .on('end', success);
-}
+    .pipe(gulp.dest(paths.destination));
+});
 ```
