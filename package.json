@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --require babel-polyfill --compilers js:babel-register",
     "build": "babel lib --presets babel-preset-es2015 --out-dir dist",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test-travis": "make test-travis"
   },
   "repository": {
     "type": "git",
