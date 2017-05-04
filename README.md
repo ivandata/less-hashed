@@ -80,7 +80,7 @@ Default: `false`
 Make new hash file and return full tree of less files and their dependencies.
 
 #### debug_mode
-Type: `boolean`      
+Type: `boolean`
 Default: `false`
 
 Save to disk the files hashes and logs: dependencies, changed files, compile and result.
