@@ -17,6 +17,7 @@ npm install less-hashed --save-dev
 
 ## Examples
 ### With Gulp
+In this case i use [gulp-filter](https://github.com/sindresorhus/gulp-filter) for filter exclude files.
 ```javascript
 'use strict';
 
@@ -55,15 +56,29 @@ gulp.task('default', function () {
 });
 ```
 ### With express.js
-
+Coming soon...
 ## API
-**lessChanged(less_files_path, hash_file_path, {options});**
-* **less_files_path** — path to less files. Use *glob* patterns. For example `'./**/*.less'`. See [node-glob](https://github.com/isaacs/node-glob) for more info and examples.
-* **hash_file_path** — path to save hash and debug files.
+### lessChanged(less_files_path, hash_file_path, [options]);
+#### less_files_path
+Type: `String`
+Path to less files. Use *glob* patterns. For example `'./**/*.less'`. See [node-glob](https://github.com/isaacs/node-glob) for more info and examples.
+#### hash_file_path
+Type: `String`
+Path to save hash and debug files.
 ### options
-* **force_compile_all** — make new hash file and return full tree of less files and their dependencies. Default is `false`.
-* **debug_mode** — save to disk the files hashes and logs: dependencies, changed files, compile and result. Default is `false`.
-* **save_sources_hashes_file** — save hash file or not. Default is `true`.
+Type: `Object`
+#### force_compile_all
+Type: `boolean`
+Default: `false`
+Make new hash file and return full tree of less files and their dependencies.
+#### debug_mode
+Type: `boolean`
+Default: `false`
+Save to disk the files hashes and logs: dependencies, changed files, compile and result.
+#### save_sources_hashes_file
+Type: `boolean`
+Default: `true`
+Save hash file or not.
 
 ## License
 Copyright (c) 2017 Ivan Malov
