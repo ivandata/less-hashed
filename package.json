@@ -2,9 +2,11 @@
   "name": "less-hashed",
   "version": "0.0.0",
   "description": "A utility to hashed less files, make tree of all less files and his dependencies with logs and return only changed files",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "mocha --require babel-polyfill --compilers js:babel-register"
+    "test": "mocha --require babel-polyfill --compilers js:babel-register",
+    "build": "babel lib --presets babel-preset-es2015 --out-dir dist",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",

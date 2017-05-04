@@ -1,7 +1,7 @@
 'use strict';
 
 import { expect, assert } from 'chai';
-import lessHashed from '../index';
+import lessHashed from '../lib/index';
 
 describe("Index", function () {
 
