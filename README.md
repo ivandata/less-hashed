@@ -4,9 +4,7 @@
 less-hashed compares the hash of the less files and their dependencies, and returns a tree of only the changed files with their dependencies, to save wasting time regenerating output.
 
 Can be useful:
-* When you need to compile only changed files and their dependencies:
-    *  For incremental builds when compiling less with gulp without a watcher, when you deploy for example.
-    * On the server, for example express.js or koa.js
+* For incremental, when you need to compile only changed files and their dependencies. Builds when compiling less with gulp without a watcher, when you deploy for example.
 * Simple to calculate and output the dependency tree.
 
 
