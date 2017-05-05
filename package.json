@@ -1,6 +1,6 @@
 {
   "name": "less-hashed",
-  "version": "1.0.1",
+  "version": "1.0.1a",
   "description": "A utility to hashed less files, make tree of all less files and his dependencies with logs and return only changed files",
   "main": "./dist/index.js",
   "scripts": {
