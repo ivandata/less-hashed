@@ -2,6 +2,8 @@
 > True incremental build — compile only changed LESS files without watcher.
 
 [![Build Status](https://travis-ci.org/ivandata/less-hashed.svg?branch=master)](https://travis-ci.org/ivandata/less-hashed)
+[![dependencies Status](https://david-dm.org/ivandata/less-hashed/status.svg)](https://david-dm.org/ivandata/less-hashed)
+[![devDependencies Status](https://david-dm.org/ivandata/less-hashed/dev-status.svg)](https://david-dm.org/ivandata/less-hashed?type=dev)
 
 less-hashed compares the hash of the less files and their dependencies, and returns a tree of only the changed files with their dependencies, to save wasting time regenerating output.
 
