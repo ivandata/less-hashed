@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/ivandata/less-hashed#readme",
   "dependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.0",
     "chai-fs": "^1.0.0",
     "colors": "^1.1.2",
     "fake-fs": "^0.5.0",
