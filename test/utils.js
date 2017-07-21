@@ -40,31 +40,31 @@ describe("Compare two hashes", function () {
 
 describe("Get paths from @imports directive", function() {
 
-    let css_extension = './test/imports-cases/extensions/css-imports/file.less';
+    let css_extension = './test/stubs/extensions/css-imports/file.less';
     it("Return full paths from .css extension", function (done) {
         expect(getImportsPaths(css_extension)).to.eql(['imports/import-file.css']);
         done();
     });
 
-    let empty_extension = './test/imports-cases/extensions/empty-imports/file.less';
+    let empty_extension = './test/stubs/extensions/empty-imports/file.less';
     it("Return full paths from NO extension", function (done) {
         expect(getImportsPaths(empty_extension)).to.eql(['imports/import-file.less']);
         done();
     });
 
-    let less_extension = './test/imports-cases/extensions/less-imports/file.less';
+    let less_extension = './test/stubs/extensions/less-imports/file.less';
     it("Return full paths from .less extension", function (done) {
         expect(getImportsPaths(less_extension)).to.eql(['imports/import-file.less']);
         done();
     });
 
-    let php_extension = './test/imports-cases/extensions/php-imports/file.less';
+    let php_extension = './test/stubs/extensions/php-imports/file.less';
     it("Return full paths from .php extension", function (done) {
         expect(getImportsPaths(php_extension)).to.eql(['imports/import-file.php']);
         done();
     });
 
-    let set_extensions = './test/imports-cases/extensions/set-imports/file.less';
+    let set_extensions = './test/stubs/extensions/set-imports/file.less';
     it("Return full paths from set of extensions", function (done) {
         expect(getImportsPaths(set_extensions))
             .to.eql([
