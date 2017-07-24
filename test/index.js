@@ -51,6 +51,7 @@ describe("Index", function () {
     it("save hash file on disc", async () => {
       fs.existsSync(hash_file_path).should.be.true();
       fs.unlinkSync(hash_file_path);
+      fs.existsSync(hash_file_path).should.be.false();
     });
 
   });
