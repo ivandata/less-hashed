@@ -3,3 +3,4 @@ lib
 test
 .babelrc
 .travis.yml
+.nvmrc
