@@ -13,7 +13,7 @@ describe("Index", function () {
 
   context('When save_sources_hashes_file is false', () => {
     let options = {
-      save_sources_hashes_file: false
+      save_hash_file: false
     };
 
     it("return files to compile", async () => {
@@ -41,7 +41,7 @@ describe("Index", function () {
 
   context('When save_sources_hashes_file is true', () => {
     let options = {
-      save_sources_hashes_file: true
+      save_hash_file: true
     };
 
     beforeEach(async () => {
