@@ -33,13 +33,13 @@ describe('Utils', function () {
     });
 
     it("Return Object", function (done) {
-      assert.isObject(compareHash(old_hash, new_hash), 'CompareHash function must return Object');
+      assert.isObject(compareHash(old_hash, new_hash), 'compareHash function must return Object');
       done();
     });
 
   });
 
-  context("Get paths from @imports directive", function() {
+  context("Get paths from @imports directive", function () {
 
     let css_extension = './test/stubs/extensions/css-imports/file.less';
     it("Return full paths from .css extension", function (done) {
@@ -79,36 +79,64 @@ describe('Utils', function () {
     });
 
     it("Return Array", function (done) {
-      assert.isArray(getImportsPaths(set_extensions), 'parseImportedFilesFromFileContent function must return Array');
+      assert.isArray(getImportsPaths(set_extensions), 'getImportsPaths function must return Array');
       done();
     });
   });
 
-  context("Corrects a relative file path in absolute", function () {
-    let relative_path = './files/level/one/file.less';
-    let absolute_paths = [
-      'file.less',
-      '../file.less',
-      '../../file.less',
-      '../../../file.less'
-    ];
-
-    it("Return absolute files paths from array of relative paths", function (done) {
-      expect(correctRelativePaths(relative_path, absolute_paths))
+  context("Correct a relative @import file paths in absolute", function () {
+    it('Return absolute files paths from array of relative paths with relative file path', async function () {
+      const path = './files/level/one/file.less';
+      const imports = [
+        'file.less',
+        './file.less',
+        '../file.less',
+        '../../file.less',
+        '../../../file.less'
+      ];
+      const result = await correctRelativePaths(path, imports);
+      expect(result)
         .to.eql([
+        './files/level/one/file.less',
         './files/level/one/file.less',
         './files/level/file.less',
         './files/file.less',
         './file.less'
       ]);
-      done();
     });
 
-    it("Return Array", function (done) {
-      assert.isArray(correctRelativePaths(relative_path, absolute_paths), 'getFileImportsFullPaths function must return Array');
-      done();
+    it('Return absolute files paths from array of relative paths with absolute file path', async function () {
+      let path = '/files/level/one/file.less';
+      const imports = [
+        'file.less',
+        './file.less',
+        '../file.less',
+        '../../file.less',
+        '../../../file.less'
+      ];
+      const result = await correctRelativePaths(path, imports);
+      expect(result)
+        .to.eql([
+        '/files/level/one/file.less',
+        '/files/level/one/file.less',
+        '/files/level/file.less',
+        '/files/file.less',
+        '/file.less'
+      ]);
     });
 
+    it("Return Array", async function () {
+      let path = '/files/level/one/file.less';
+      const imports = [
+        'file.less',
+        './file.less',
+        '../file.less',
+        '../../file.less',
+        '../../../file.less'
+      ];
+      const result = await correctRelativePaths(path, imports);
+      assert.isArray(result, 'correctRelativePaths function must return Array');
+    });
   });
 
   context("Inverts the file tree with @imports in them", function () {
