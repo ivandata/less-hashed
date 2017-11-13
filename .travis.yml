@@ -1,4 +1,4 @@
 language: node_js
 
 node_js:
-  - "6.9.0"
+  - "v8.1.2"
