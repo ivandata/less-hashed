@@ -17,18 +17,18 @@ Can be useful:
 npm install less-hashed --save-dev
 ```
 
-## Gulp example
+## Simple Gulp example
 Used [gulp-filter](https://github.com/sindresorhus/gulp-filter) for filter exclude files.
 ```javascript
 'use strict';
 
-const
-  gulp = require('gulp'),
-  less = require('gulp-less'),
-  filter = require('gulp-filter'),
-  lessHashed = require('less-hashed');
+const gulp = require('gulp');
+const less = require('gulp-less');
+const filter = require('gulp-filter');
+const lessHashed = require('less-hashed');
 
-let paths = {
+const paths = {
+  base: './assets/less/',
   src: './assets/less/**/*.less',
   include: '**/*.less',
   exclude: '!**/_*.less',
@@ -36,56 +36,45 @@ let paths = {
 };
 
 gulp.task('default', function () {
-
-  let includes, force_compile_all, debug_mode;
-  if (process.argv.indexOf('--force') > -1) { force_compile_all = true; }
-  if (process.argv.indexOf('--debug') > -1) { debug_mode = true; }
-  includes = lessHashed(
+  const includes = lessHashed(
     paths.src,
-    paths.destination + '/hashes.json',
     {
-      force_compile_all:  force_compile_all,
-      debug_mode: debug_mode
+      hashPath: paths.destination,
+      force:  process.argv.indexOf('--force') > -1
     }
   );
 
   return gulp
-    .src(includes, { base: './assets/less/' })
+    .src(includes, { base: paths.base })
     .pipe(filter([ paths.include, paths.exclude ]))
-    .pipe(less({ relativeUrls: true })
+    .pipe(less({ relativeUrls: true }))
     .pipe(gulp.dest(paths.destination));
 });
 ```
 ## API
-### lessChanged(less_files_path, hash_file_path, [options]);
+### lessChanged(pathToFiles, [options]);
 
-#### less_files_path
+#### pathToFiles
 Type: `String`
 
 Path to less files. Use *glob* patterns. For example `'./**/*.less'`. See [node-glob](https://github.com/isaacs/node-glob) for more info and examples.
 
-#### hash_file_path
-Type: `String`
-
-Path to save hash and debug files.
-
-### options
+#### options
 Type: `Object`
 
-#### force_compile_all
+##### hashPath
+Type: `String`
+
+Path to save hash file. If undefined — SAVE HASH mode disabled. It's mean files will not be hashed.
+
+##### hashName
+Type: `string`  
+Default: `hashes.json`
+
+Hash file name.
+
+##### force
 Type: `boolean`  
 Default: `false`
 
 Make new hash file and return full tree of less files and their dependencies.
-
-#### debug_mode
-Type: `boolean`  
-Default: `false`
-
-Save to disk the files hashes and logs: dependencies, changed files, compile and result.
-
-#### save_sources_hashes_file
-Type: `boolean`  
-Default: `true`
-
-Save hash file or not.
