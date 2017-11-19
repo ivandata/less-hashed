@@ -1,0 +1,49 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/malov/.nvm/versions/node/v6.9.0/bin/node',
+1 verbose cli   '/Users/malov/.nvm/versions/node/v6.9.0/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'test' ]
+2 info using npm@3.10.8
+3 info using node@v6.9.0
+4 verbose run-script [ 'pretest', 'test', 'posttest' ]
+5 info lifecycle less-hashed@2.0.0~pretest: less-hashed@2.0.0
+6 silly lifecycle less-hashed@2.0.0~pretest: no script for pretest, continuing
+7 info lifecycle less-hashed@2.0.0~test: less-hashed@2.0.0
+8 verbose lifecycle less-hashed@2.0.0~test: unsafe-perm in lifecycle true
+9 verbose lifecycle less-hashed@2.0.0~test: PATH: /Users/malov/.nvm/versions/node/v6.9.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/malov/repo/less-hashed/node_modules/.bin:/Users/malov/.rvm/gems/ruby-2.3.4/bin:/Users/malov/.rvm/gems/ruby-2.3.4@global/bin:/Users/malov/.rvm/rubies/ruby-2.3.4/bin:/Users/malov/.nvm/versions/node/v6.9.0/bin:/Users/malov/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/malov/.rvm/bin
+10 verbose lifecycle less-hashed@2.0.0~test: CWD: /Users/malov/repo/less-hashed
+11 silly lifecycle less-hashed@2.0.0~test: Args: [ '-c',
+11 silly lifecycle   'NODE_PATH=. mocha --require babel-polyfill --compilers js:babel-register' ]
+12 silly lifecycle less-hashed@2.0.0~test: Returned: code: 1  signal: null
+13 info lifecycle less-hashed@2.0.0~test: Failed to exec test script
+14 verbose stack Error: less-hashed@2.0.0 test: `NODE_PATH=. mocha --require babel-polyfill --compilers js:babel-register`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/Users/malov/.nvm/versions/node/v6.9.0/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (/Users/malov/.nvm/versions/node/v6.9.0/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:877:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+15 verbose pkgid less-hashed@2.0.0
+16 verbose cwd /Users/malov/repo/less-hashed
+17 error Darwin 16.3.0
+18 error argv "/Users/malov/.nvm/versions/node/v6.9.0/bin/node" "/Users/malov/.nvm/versions/node/v6.9.0/bin/npm" "run" "test"
+19 error node v6.9.0
+20 error npm  v3.10.8
+21 error code ELIFECYCLE
+22 error less-hashed@2.0.0 test: `NODE_PATH=. mocha --require babel-polyfill --compilers js:babel-register`
+22 error Exit status 1
+23 error Failed at the less-hashed@2.0.0 test script 'NODE_PATH=. mocha --require babel-polyfill --compilers js:babel-register'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the less-hashed package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     NODE_PATH=. mocha --require babel-polyfill --compilers js:babel-register
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs less-hashed
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls less-hashed
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
