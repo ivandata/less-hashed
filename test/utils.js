@@ -2,6 +2,7 @@
 
 import {expect, assert} from 'chai';
 import {
+  getFileHash,
   compareHash,
   getImportsPaths,
   correctRelativePaths,
@@ -12,13 +13,13 @@ import {
 describe('Utils', function () {
   context("Compare two hashes", function () {
 
-    let old_hash = {
+    const old_hash = {
       "less/base.less": "1ee4355eba05a8cb5daa7ab72d74a958766200b7",
       "less/components.less": "fd28a5fc8e2d3624b1dcaf7e07e0984f509dced4",
       "less/pages/page.less": "578cf46f907c707cd6eccb4e131ac3bc8bb36163"
     };
 
-    let new_hash = {
+    const new_hash = {
       "less/base.less": "63a14e41ab171c6530d0e43131fb71324e077807",
       "less/components.less": "fd28a5fc8e2d3624b1dcaf7e07e0984f509dced4",
       "less/pages/page.less": "b7f631511b5962f42922ff5de02b26a992ac746c"
@@ -41,31 +42,31 @@ describe('Utils', function () {
 
   context("Get paths from @imports directive", function () {
 
-    let css_extension = './test/stubs/extensions/css-imports/file.less';
+    const css_extension = './test/stubs/extensions/css-imports/file.less';
     it("Return full paths from .css extension", function (done) {
       expect(getImportsPaths(css_extension)).to.eql(['imports/import-file.css']);
       done();
     });
 
-    let empty_extension = './test/stubs/extensions/empty-imports/file.less';
+    const empty_extension = './test/stubs/extensions/empty-imports/file.less';
     it("Return full paths from NO extension", function (done) {
       expect(getImportsPaths(empty_extension)).to.eql(['imports/import-file.less']);
       done();
     });
 
-    let less_extension = './test/stubs/extensions/less-imports/file.less';
+    const less_extension = './test/stubs/extensions/less-imports/file.less';
     it("Return full paths from .less extension", function (done) {
       expect(getImportsPaths(less_extension)).to.eql(['imports/import-file.less']);
       done();
     });
 
-    let php_extension = './test/stubs/extensions/php-imports/file.less';
+    const php_extension = './test/stubs/extensions/php-imports/file.less';
     it("Return full paths from .php extension", function (done) {
       expect(getImportsPaths(php_extension)).to.eql(['imports/import-file.php']);
       done();
     });
 
-    let set_extensions = './test/stubs/extensions/set-imports/file.less';
+    const set_extensions = './test/stubs/extensions/set-imports/file.less';
     it("Return full paths from set of extensions", function (done) {
       expect(getImportsPaths(set_extensions))
         .to.eql([
@@ -106,7 +107,7 @@ describe('Utils', function () {
     });
 
     it('Return absolute files paths from array of relative paths with absolute file path', async function () {
-      let path = '/files/level/one/file.less';
+      const path = '/files/level/one/file.less';
       const imports = [
         'file.less',
         './file.less',
@@ -126,7 +127,7 @@ describe('Utils', function () {
     });
 
     it("Return Array", async function () {
-      let path = '/files/level/one/file.less';
+      const path = '/files/level/one/file.less';
       const imports = [
         'file.less',
         './file.less',
@@ -141,7 +142,7 @@ describe('Utils', function () {
 
   context("Inverts the file tree with @imports in them", function () {
 
-    let file_tree = {
+    const file_tree = {
       "./assets/file.less": [
         "./assets/dependency_1.less"
       ],
@@ -190,12 +191,12 @@ describe('Utils', function () {
 
   context("Builds a tree of compiled files of the dependencies", function () {
 
-    let changed_files = {
+    const changed_files = {
       "./assets/dependency_1.less": "1ee4355eba05a8cb5daa7ab72d74a958766200b7",
       "./assets/other_file.less": "63a14e41ab171c6530d0e43131fb71324e077807"
     };
 
-    let file_imported_in_tree = {
+    const file_imported_in_tree = {
       "./assets/dependency_1.less": {
         "./assets/file.less": 1,
         "./assets/other_file.less": 1
@@ -228,6 +229,17 @@ describe('Utils', function () {
         "./assets/file.less": 1,
         "./assets/other_file.less": 1
       });
+      done();
+    });
+
+  });
+
+  context("Get hash of file by using mtime", function () {
+    const path_to_file = './test/stubs/extensions/css-imports/file.less';
+
+    it("Return hash of file", function (done) {
+      const result = getFileHash(path_to_file);
+      assert.isString(result, 'getFileHash function must return String');
       done();
     });
 
