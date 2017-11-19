@@ -1,6 +1,6 @@
 {
   "name": "less-hashed",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A utility to hashed less files, return only changed files",
   "engines": {
     "node": "v8.1.2"
