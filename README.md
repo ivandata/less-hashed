@@ -17,7 +17,7 @@ Can be useful:
 npm install less-hashed --save-dev
 ```
 
-## Simple Gulp example
+## Gulp example
 Used [gulp-filter](https://github.com/sindresorhus/gulp-filter) for filter exclude files.
 ```javascript
 'use strict';
@@ -27,28 +27,68 @@ const less = require('gulp-less');
 const filter = require('gulp-filter');
 const lessHashed = require('less-hashed');
 
-const paths = {
+const config = {
   base: './assets/less/',
   src: './assets/less/**/*.less',
   include: '**/*.less',
   exclude: '!**/_*.less',
-  destination: './build/css/'
+  destination: './build/css/',
+  settings: {
+    relativeUrls: true
+  }
 };
 
 gulp.task('default', function () {
   const includes = lessHashed(
-    paths.src,
+    config.src,
     {
-      hashPath: paths.destination,
+      hashPath: config.destination,
       force:  process.argv.indexOf('--force') > -1
     }
   );
 
   return gulp
-    .src(includes, { base: paths.base })
-    .pipe(filter([ paths.include, paths.exclude ]))
-    .pipe(less({ relativeUrls: true }))
-    .pipe(gulp.dest(paths.destination));
+    .src(includes, { base: config.base })
+    .pipe(filter([ config.include, config.exclude ]))
+    .pipe(less(config.settings))
+    .pipe(gulp.dest(config.destination));
+});
+```
+## Absolute paths
+```javascript
+'use strict';
+
+const gulp = require('gulp');
+const less = require('gulp-less');
+const filter = require('gulp-filter');
+const lessHashed = require('less-hashed');
+
+const config = {
+  base: './assets/less/',
+  src: './assets/less/**/*.less',
+  include: '**/*.less',
+  exclude: '!**/_*.less',
+  destination: './build/css/',
+  settings: {
+    paths: ['./assets']
+  }
+};
+
+gulp.task('default', function () {
+  const includes = lessHashed(
+    config.src,
+    {
+      hashPath: config.destination,
+      force:  process.argv.indexOf('--force') > -1,
+      base: config.settings.paths[0]
+    }
+  );
+
+  return gulp
+    .src(includes, { base: config.base })
+    .pipe(filter([ config.include, config.exclude ]))
+    .pipe(less(config.settings))
+    .pipe(gulp.dest(config.destination));
 });
 ```
 ## API
